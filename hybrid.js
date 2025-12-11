@@ -888,7 +888,7 @@ async function main() {
     if (vertexCount > 0) {
       document.getElementById("spinner").style.display = "none";
       gl.uniformMatrix4fv(u_view, false, actualViewMatrix);
-      let t = (Date.now() % 5000) / 1000;
+      let t = (Date.now() *0.5 % 5000) / 1000;
       gl.uniform1f(u_time, t);
       // gl.uniform1f(u_time, Math.sin(Date.now() / 1000) * 2.5 + 2.5);
 
