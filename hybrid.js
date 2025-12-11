@@ -292,7 +292,7 @@ const vertexShaderSource = `
       vec2 trbf = unpackHalf2x16(motion1.w);
       float dt = time - trbf.x;
 
-      float topacity = exp(-1.0 * pow(dt / trbf.y, 2.0));
+      float topacity = exp(-0.5 * pow(dt / trbf.y, 2.0));
       if(topacity < 0.02) return;
 
       uvec4 motion0 = texelFetch(u_texture, ivec2(((uint(index) & 0x3ffu) << 2) | 2u, uint(index) >> 10), 0);
