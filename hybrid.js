@@ -970,10 +970,16 @@ async function main() {
 
   let lastVertexCount = -1;
   const chunkHandler = (chunk, buffer, remaining, chunks) => {
+    // if (!remaining && chunk.type === "magic") {
+    //   let intView = new Uint32Array(buffer);
+    //   if (intView[0] !== 0x674b) throw new Error("This does not look like a splatv file");
+    //   chunks.push({ size: intView[1], type: "chunks" });
     if (!remaining && chunk.type === "magic") {
-      let intView = new Uint32Array(buffer);
-      if (intView[0] !== 0x674b) throw new Error("This does not look like a splatv file");
-      chunks.push({ size: intView[1], type: "chunks" });
+      const view = new DataView(buffer);
+      const magic = view.getUint32(0, true); // true = little-endian
+      if (magic !== 0x674b) throw new Error("This does not look like a splatv file");
+      const size = view.getUint32(4, true);
+      chunks.push({ size, type: "chunks" });
     } else if (!remaining && chunk.type === "chunks") {
       for (let chunk of JSON.parse(new TextDecoder("utf-8").decode(buffer))) {
         chunks.push(chunk);
