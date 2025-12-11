@@ -888,7 +888,9 @@ async function main() {
     if (vertexCount > 0) {
       document.getElementById("spinner").style.display = "none";
       gl.uniformMatrix4fv(u_view, false, actualViewMatrix);
-      gl.uniform1f(u_time, Math.sin(Date.now() / 1000) * 2.5 + 2.5);
+      let t = (Date.now() % 5000) / 1000;
+      gl.uniform1f(u_time, t);
+      // gl.uniform1f(u_time, Math.sin(Date.now() / 1000) * 2.5 + 2.5);
 
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.drawArraysInstanced(gl.TRIANGLE_FAN, 0, 4, vertexCount);
