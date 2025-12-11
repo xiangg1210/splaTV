@@ -329,7 +329,9 @@ async function initXR() {
     gl.bindFramebuffer(gl.FRAMEBUFFER, glLayer.framebuffer);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    gl.uniform1f(u_time, Math.sin(Date.now() / 1000) * 2.5 + 2.5);
+    let t = (Date.now() % 5000) / 1000;
+    gl.uniform1f(u_time, t);
+    //gl.uniform1f(u_time, Math.sin(Date.now() / 1000) * 2.5 + 2.5);
 
     for (let view of pose.views) {
       let viewport = glLayer.getViewport(view);
